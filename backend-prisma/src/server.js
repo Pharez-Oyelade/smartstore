@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 // import Routes
 import authRouter from "./routes/auth.routes.js";
+import salesRouter from "./routes/sales.routes.js";
 
 connectDB();
 
@@ -27,9 +28,11 @@ app.get("/health", (req, res) => {
   res.json({ message: "Server is healthy" });
 });
 
+// Routes
 app.use("/auth", authRouter);
+app.use("/sales", salesRouter);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
 
