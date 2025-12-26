@@ -1,14 +1,14 @@
-import React from 'react'
-import { Plus } from 'lucide-react'
+import React from "react";
+import { Plus } from "lucide-react";
 
-const BtnPrimary = ({text,  onClick}) => {
+const BtnPrimary = ({ text, type = "button", onClick }) => {
   return (
     <div>
-      <button className="btn-primary" onClick={onClick}>
+      <button type={type} className="btn-primary" onClick={onClick}>
         {text} <Plus className="inline-block ml-2" />
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default BtnPrimary
+export default BtnPrimary;
