@@ -6,6 +6,7 @@ import BtnPrimary from "@/components/ui/BtnPrimary";
 import { Search } from "lucide-react";
 import Modal from "@/components/ui/Modal";
 import ProductTable from "./components/ProductTable";
+import InventoryLoader from "@/components/ui/InventoryLoader";
 
 import { useForm } from "react-hook-form";
 import EditModal from "./components/EditModal";
@@ -14,7 +15,9 @@ import AddModal from "./components/AddModal";
 const Page = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
   const [loading, setLoading] = useState(false);
+  const [deletingProductId, setDeletingProductId] = useState(null);
 
   const [addProductModal, setAddProductModal] = useState(false);
   const [updateProductModal, setUpdateProductModal] = useState(false);
@@ -34,6 +37,14 @@ const Page = () => {
       stock: "",
     },
   });
+
+  const deleteAlert = (product) => {
+    if (window.confirm(`Are you sure you want to delete ${product.name}?`)) {
+      deleteProduct(product.id);
+    } else {
+      return;
+    }
+  };
 
   const openEditModal = (product) => {
     setSelectedProduct(product);
@@ -108,12 +119,18 @@ const Page = () => {
   };
 
   const deleteProduct = async (id) => {
+    setDeletingProductId(id);
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     try {
       const response = await api.post(`/products/delete/${id}`);
       console.log(response);
       fetchProducts();
     } catch (error) {
       console.log(error);
+    } finally {
+      setDeletingProductId(null);
     }
   };
 
@@ -135,72 +152,80 @@ const Page = () => {
 
   return (
     <div className="p-4">
-      <header className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-extrabold">Products</h1>
-          <p className="text-slate-500 text-sm">
-            Manage your inventory, prices, and stock levels
-          </p>
-        </div>
-        <BtnPrimary
-          onClick={() => {
-            addForm.reset();
-            setAddProductModal(true);
-          }}
-          text="Add Product"
-        />
-      </header>
+      {loading ? (
+        <InventoryLoader />
+      ) : (
+        <>
+          <header className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-extrabold">Products</h1>
+              <p className="text-slate-500 text-sm">
+                Manage your inventory, prices, and stock levels
+              </p>
+            </div>
+            <BtnPrimary
+              onClick={() => {
+                addForm.reset();
+                setAddProductModal(true);
+              }}
+              text="Add Product"
+            />
+          </header>
 
-      <div className="mt-8 flex items-center gap-4">
-        <div className="flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
-          <Search className="w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search products"
-            className="bg-transparent focus:outline-none w-full text-sm"
+          <div className="mt-8 flex items-center gap-4">
+            <div className="flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
+              <Search className="w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search products"
+                className="bg-transparent focus:outline-none w-full text-sm"
+              />
+            </div>
+
+            <div className="border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+              <span className="text-slate-500">Stock:</span>
+              <select className="focus:outline-none bg-transparent font-medium">
+                <option>All</option>
+                <option>In Stock</option>
+                <option>Out of Stock</option>
+              </select>
+            </div>
+          </div>
+
+          {/* ........ PRODUCT TABLE ............. */}
+          <ProductTable
+            products={products}
+            getStatusStyle={getStatusStyle}
+            getStatusText={getStatusText}
+            deleteProduct={deleteProduct}
+            openEditModal={openEditModal}
+            deleteAlert={deleteAlert}
+            deletingProductId={deletingProductId}
           />
-        </div>
 
-        <div className="border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
-          <span className="text-slate-500">Stock:</span>
-          <select className="focus:outline-none bg-transparent font-medium">
-            <option>All</option>
-            <option>In Stock</option>
-            <option>Out of Stock</option>
-          </select>
-        </div>
-      </div>
+          {addProductModal && (
+            <AddModal
+              onClose={() => {
+                addForm.reset();
+                setAddProductModal(false);
+              }}
+              addForm={addForm}
+              onSubmit={onSubmit}
+            />
+          )}
 
-      {/* ........ PRODUCT TABLE ............. */}
-      <ProductTable
-        products={products}
-        getStatusStyle={getStatusStyle}
-        getStatusText={getStatusText}
-        deleteProduct={deleteProduct}
-        openEditModal={openEditModal}
-      />
-
-      {addProductModal && (
-        <AddModal
-          onClose={() => {
-            addForm.reset();
-            setAddProductModal(false);
-          }}
-          addForm={addForm}
-          onSubmit={onSubmit}
-        />
-      )}
-
-      {updateProductModal && (
-        <EditModal
-          onClose={() => {
-            updateForm.reset();
-            setUpdateProductModal(false);
-            setSelectedProduct(null);
-          }}
-          updateForm={updateForm}
-          onUpdateProduct={onUpdateProduct}
-        />
+          {updateProductModal && (
+            <EditModal
+              onClose={() => {
+                updateForm.reset();
+                setUpdateProductModal(false);
+                setSelectedProduct(null);
+              }}
+              updateForm={updateForm}
+              onUpdateProduct={onUpdateProduct}
+            />
+          )}
+        </>
       )}
     </div>
   );
