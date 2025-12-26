@@ -6,6 +6,7 @@ const ProductTable = ({
   getStatusStyle,
   getStatusText,
   deleteProduct,
+  openEditModal,
 }) => {
   return (
     <div>
@@ -62,6 +63,7 @@ const ProductTable = ({
                 </td>
                 <td className="px-6 py-8 text-right flex gap-3 justify-end items-center">
                   <button
+                    onClick={() => openEditModal(product)}
                     className="text-slate-400 hover:text-slate-600 cursor-pointer"
                     title="Edit"
                   >

@@ -52,6 +52,63 @@ const getProducts = async (req, res) => {
 // get single product by id
 
 // update product by id
+const updateProduct = async (req, res) => {
+  try {
+    const userId = req.user.id;
+  const productId = req.params.id;
+
+  const {name, price, stockAdjustment} = req.body;
+
+  const product = await prisma.product.findFirst({
+    where: {
+      id: productId,
+      createdBy: userId,
+    }
+  })
+
+  if (!product) {
+    return res.status(404).json({ error: "Product not found" });
+  }
+
+  // build payload
+  const updateData = {};
+
+  if (name !== undefined) {
+    updateData.name = name;
+  }
+
+  if (price !== undefined) {
+    updateData.price = price;
+  }
+
+  // stock handled safely
+  if (stockAdjustment !== undefined) {
+    const newStock = product.stock + Number(stockAdjustment);
+   
+    if (newStock < 0) {
+      return res.status(400).json({ error: "Stock cannot be negative" });
+    }
+
+    updateData.stock = newStock;
+  }
+
+  // update product
+  const updatedProduct = await prisma.product.update({
+    where: {
+      id: productId,
+    },
+    data: updateData,
+  })
+
+  return res.status(200).json({
+    status: "success",
+    data: updatedProduct,
+  })
+  } catch (error) {
+    console.error("updateProduct error:", error);
+    res.status(500).json({ error: "Failed to update product" });
+  }
+}
 
 // delete product by id
 const deleteProduct = async (req, res) => {
@@ -79,4 +136,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-export { createProduct, getProducts, deleteProduct };
+export { createProduct, getProducts, updateProduct, deleteProduct };

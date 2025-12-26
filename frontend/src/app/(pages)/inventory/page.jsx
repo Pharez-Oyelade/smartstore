@@ -11,14 +11,46 @@ import { useForm } from "react-hook-form";
 
 const Page = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [addProductModal, setAddProductModal] = useState(false);
+  const [updateProductModal, setUpdateProductModal] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm();
+  const addForm = useForm({
+    defaultValues: {
+      name: "",
+      selling_price: "",
+      stock: "",
+    },
+  });
+
+  const updateForm = useForm({
+    defaultValues: {
+      name: "",
+      selling_price: "",
+      stock: "",
+    },
+  });
+
+  const openEditModal = (product) => {
+    setSelectedProduct(product);
+
+    updateForm.reset({
+      name: product.name,
+      selling_price: product.price,
+      stock: product.stock,
+    });
+
+    setUpdateProductModal(true);
+  };
 
   const onSubmit = (data) => {
     addProduct(data);
+  };
+
+  const onUpdateProduct = (data) => {
+    updateProduct(data);
   };
 
   // Helper for status badge styling
@@ -45,7 +77,28 @@ const Page = () => {
       console.log(response);
 
       setAddProductModal(false);
-      reset();
+      addForm.reset();
+      fetchProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateProduct = async (data) => {
+    const payload = {
+      name: data.name,
+      price: Number(data.selling_price),
+      stockAdjustment: Number(data.stock) - selectedProduct.stock,
+    };
+
+    try {
+      const response = await api.post(
+        `products/update/${selectedProduct.id}`,
+        payload
+      );
+      console.log(response);
+      setUpdateProductModal(false);
+      updateForm.reset();
       fetchProducts();
     } catch (error) {
       console.log(error);
@@ -88,7 +141,10 @@ const Page = () => {
           </p>
         </div>
         <BtnPrimary
-          onClick={() => setAddProductModal(true)}
+          onClick={() => {
+            addForm.reset();
+            setAddProductModal(true);
+          }}
           text="Add Product"
         />
       </header>
@@ -119,18 +175,22 @@ const Page = () => {
         getStatusStyle={getStatusStyle}
         getStatusText={getStatusText}
         deleteProduct={deleteProduct}
+        openEditModal={openEditModal}
       />
 
       {addProductModal && (
         <Modal
-          onClose={() => setAddProductModal(false)}
+          onClose={() => {
+            addForm.reset();
+            setAddProductModal(false);
+          }}
           closeText="Bact to Inventory"
         >
           <div className="flex gap-20 mt-10">
             <h2 className="text-2xl font-bold">Add New Product</h2>
 
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={addForm.handleSubmit(onSubmit)}
               action=""
               className="flex flex-col gap-4 w-[60%] bg-white p-6 rounded-lg shadow-lg border  border-slate-200"
             >
@@ -140,7 +200,7 @@ const Page = () => {
                   type="text"
                   placeholder="Product Name"
                   className="border border-slate-200 rounded-lg px-3 py-2"
-                  {...register("name")}
+                  {...addForm.register("name")}
                 />
               </label>
 
@@ -160,7 +220,9 @@ const Page = () => {
                     type="number"
                     placeholder="Product Price"
                     className="border border-slate-200 rounded-lg px-3 py-2 w-full"
-                    {...register("selling_price", { valueAsNumber: true })}
+                    {...addForm.register("selling_price", {
+                      valueAsNumber: true,
+                    })}
                   />
                 </label>
                 <label htmlFor="" className="flex flex-col gap-2">
@@ -183,7 +245,7 @@ const Page = () => {
                     type="number"
                     placeholder="Stock"
                     className="border border-slate-200 rounded px-5 py-2 w-[30%]"
-                    {...register("stock", { valueAsNumber: true })}
+                    {...addForm.register("stock", { valueAsNumber: true })}
                   />
                   <span className="border border-slate-200 rounded px-5 py-2 bg-gray-200">
                     -
@@ -200,6 +262,96 @@ const Page = () => {
                 />
               </label>
               <BtnPrimary text="Add Product" />
+            </form>
+          </div>
+        </Modal>
+      )}
+
+      {updateProductModal && (
+        <Modal
+          onClose={() => {
+            updateForm.reset();
+            setUpdateProductModal(false);
+            setSelectedProduct(null);
+          }}
+          closeText="Back to Inventory"
+        >
+          <div className="flex gap-20 mt-10">
+            <h2 className="text-2xl font-bold">Update Product</h2>
+
+            <form
+              onSubmit={updateForm.handleSubmit(onUpdateProduct)}
+              action=""
+              className="flex flex-col gap-4 w-[60%] bg-white p-6 rounded-lg shadow-lg border  border-slate-200"
+            >
+              <label htmlFor="" className="flex flex-col gap-2">
+                <span className="text-black text-sm">Product Name</span>
+                <input
+                  type="text"
+                  placeholder="Product Name"
+                  className="border border-slate-200 rounded-lg px-3 py-2"
+                  {...updateForm.register("name")}
+                />
+              </label>
+
+              <label htmlFor="" className="flex flex-col gap-2">
+                <span className="text-black text-sm">Product Description</span>
+                <input
+                  type="text"
+                  placeholder="Product Description"
+                  className="border border-slate-200 rounded-lg px-3 py-2"
+                />
+              </label>
+
+              <div className="flex gap-4">
+                <label htmlFor="" className="flex flex-col gap-2">
+                  <span className="text-black text-sm">Selling Price</span>
+                  <input
+                    type="number"
+                    placeholder="Product Price"
+                    className="border border-slate-200 rounded-lg px-3 py-2 w-full"
+                    {...updateForm.register("selling_price", {
+                      valueAsNumber: true,
+                    })}
+                  />
+                </label>
+                <label htmlFor="" className="flex flex-col gap-2">
+                  <span className="text-black text-sm">Cost Price</span>
+                  <input
+                    type="text"
+                    placeholder="Product Price"
+                    className="border border-slate-200 rounded-lg px-3 py-2 w-full"
+                  />
+                </label>
+              </div>
+
+              <label htmlFor="" className="flex flex-col gap-2">
+                <span className="text-black text-sm">Product Stock</span>
+                <div className="flex gap-4">
+                  <span className="border border-slate-200 rounded px-5 py-2 bg-gray-200">
+                    +
+                  </span>
+                  <input
+                    type="number"
+                    placeholder="Stock"
+                    className="border border-slate-200 rounded px-5 py-2 w-[30%]"
+                    {...updateForm.register("stock", { valueAsNumber: true })}
+                  />
+                  <span className="border border-slate-200 rounded px-5 py-2 bg-gray-200">
+                    -
+                  </span>
+                </div>
+              </label>
+
+              <label htmlFor="" className="flex flex-col gap-2">
+                <span className="text-black text-sm">Product Category</span>
+                <input
+                  type="text"
+                  placeholder="Product Category"
+                  className="border border-slate-200 rounded-lg px-3 py-2"
+                />
+              </label>
+              <BtnPrimary text="Update Product" />
             </form>
           </div>
         </Modal>
