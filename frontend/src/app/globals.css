@@ -34,3 +34,15 @@ a.active {
   background: #0071f331;
   text-decoration: none;
 }
+
+.btn-primary {
+  background: var(--bg-accent);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: rgb(23, 23, 235);
+}

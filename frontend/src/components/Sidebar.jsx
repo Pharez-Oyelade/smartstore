@@ -19,7 +19,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="fixed h-full bg-white w-[15%] border-r border-gray-300 p-4">
+    <aside className="fixed h-full bg-white w-[15%] border-r border-gray-300 p-4 z-50">
       <div className="flex items-center gap-4">
         <div className="bg-[#0070f3] p-2 rounded-xl inline-block my-4">
           <Store size={28} color="#fff" />
