@@ -61,12 +61,16 @@ const ProductTable = ({
                   </span>
                 </td>
                 <td className="px-6 py-8 text-right flex gap-3 justify-end items-center">
-                  <button className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                  <button
+                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                    title="Edit"
+                  >
                     <Pencil size={18} />
                   </button>
                   <button
                     onClick={() => deleteProduct(product.id)}
                     className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                    title="Delete"
                   >
                     <Trash2 size={18} />
                   </button>
