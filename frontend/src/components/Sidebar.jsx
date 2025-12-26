@@ -10,12 +10,29 @@ import { Users } from "lucide-react";
 import { UserStar } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import api from "@/lib/axios";
 
 const Sidebar = () => {
+  const { user, setUser } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
 
   const isActiveClass = (path) => {
     return pathname === path ? "active" : "";
+  };
+
+  const handleLogout = async () => {
+    try {
+      // ensure credentials (cookies) are sent with the request
+      await api.get("/auth/logout");
+      setUser(null);
+      // navigate to login so middleware will apply (cookie cleared)
+      router.push("/login");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -75,6 +92,12 @@ const Sidebar = () => {
             <UserStar className="inline mr-2" size={24} />
             Profile
           </Link>
+          <button
+            onClick={handleLogout}
+            className="block py-2 px-4 rounded hover:bg-blue-200/20"
+          >
+            Logout
+          </button>
         </div>
       </nav>
     </aside>
