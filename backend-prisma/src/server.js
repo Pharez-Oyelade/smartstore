@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 // import Routes
 import authRouter from "./routes/auth.routes.js";
 import salesRouter from "./routes/sales.routes.js";
+import productRouter from "./routes/products.routes.js";
 
 connectDB();
 
@@ -17,7 +18,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ENV.CLIENT_URL,
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -31,6 +32,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/auth", authRouter);
 app.use("/sales", salesRouter);
+app.use("/products", productRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
