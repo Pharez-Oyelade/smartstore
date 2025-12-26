@@ -1,7 +1,12 @@
 import React from "react";
 import { Package, MoreVertical, Pencil, Trash2 } from "lucide-react";
 
-const ProductTable = ({ products, getStatusStyle, getStatusText }) => {
+const ProductTable = ({
+  products,
+  getStatusStyle,
+  getStatusText,
+  deleteProduct,
+}) => {
   return (
     <div>
       <div className="mt-8 overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
@@ -55,11 +60,14 @@ const ProductTable = ({ products, getStatusStyle, getStatusText }) => {
                     {getStatusText(product.stock)}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-right flex gap-3 justify-end">
+                <td className="px-6 py-8 text-right flex gap-3 justify-end items-center">
                   <button className="text-slate-400 hover:text-slate-600 cursor-pointer">
                     <Pencil size={18} />
                   </button>
-                  <button className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
                     <Trash2 size={18} />
                   </button>
                 </td>

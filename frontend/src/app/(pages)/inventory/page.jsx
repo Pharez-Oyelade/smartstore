@@ -8,11 +8,8 @@ import Modal from "@/components/ui/Modal";
 import ProductTable from "./components/ProductTable";
 
 import { useForm } from "react-hook-form";
-import { useAuth } from "@/context/AuthContext";
 
 const Page = () => {
-  const { user } = useAuth();
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +39,6 @@ const Page = () => {
       name: data.name,
       price: parseFloat(data.selling_price),
       stock: parseInt(data.stock),
-      createdBy: user.id,
     };
     try {
       const response = await api.post("/products/create", payload);
@@ -50,6 +46,16 @@ const Page = () => {
 
       setAddProductModal(false);
       reset();
+      fetchProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const response = await api.post(`/products/delete/${id}`);
+      console.log(response);
       fetchProducts();
     } catch (error) {
       console.log(error);
@@ -112,6 +118,7 @@ const Page = () => {
         products={products}
         getStatusStyle={getStatusStyle}
         getStatusText={getStatusText}
+        deleteProduct={deleteProduct}
       />
 
       {addProductModal && (

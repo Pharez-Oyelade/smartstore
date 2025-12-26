@@ -2,7 +2,8 @@ import { prisma } from "../config/db.js";
 
 // create a new product
 const createProduct = async (req, res) => {
-  const { name, description, price, stock, createdBy } = req.body;
+  const { name, description, price, stock } = req.body;
+  const userId = req.user.id; // get user id from auth middleware
 
   try {
     const newProduct = await prisma.product.create({
@@ -11,7 +12,7 @@ const createProduct = async (req, res) => {
         description,
         price,
         stock,
-        createdBy,
+        createdBy: userId,
       },
     });
     res.status(201).json({
@@ -31,10 +32,14 @@ const createProduct = async (req, res) => {
   }
 };
 
-// get all products
+// get all products for a user
 const getProducts = async (req, res) => {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      where: {
+        createdBy: req.user.id,
+      },
+    });
     res.status(200).json({
       staus: "success",
       data: products,
@@ -49,5 +54,29 @@ const getProducts = async (req, res) => {
 // update product by id
 
 // delete product by id
+const deleteProduct = async (req, res) => {
+  const {id} = req.params;
 
-export { createProduct, getProducts };
+  try {
+    const deleted = await prisma.product.delete({
+      where: {
+        id: id,
+        createdBy: req.user.id,
+      }
+    })
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: deleted,
+    });
+  } catch (error) {
+    console.error("deleteProduct error:", error);
+    res.status(500).json({ error: "Failed to delete product" });
+  }
+};
+
+export { createProduct, getProducts, deleteProduct };
