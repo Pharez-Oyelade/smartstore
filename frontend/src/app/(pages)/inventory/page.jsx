@@ -14,7 +14,10 @@ import AddModal from "./components/AddModal";
 
 const Page = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [search, setSearch] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
@@ -23,6 +26,14 @@ const Page = () => {
 
   const [addProductModal, setAddProductModal] = useState(false);
   const [updateProductModal, setUpdateProductModal] = useState(false);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value.trim());
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
 
   const addForm = useForm({
     defaultValues: {
@@ -159,6 +170,10 @@ const Page = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
+
   return (
     <div className="p-4">
       {loading ? (
@@ -182,10 +197,12 @@ const Page = () => {
           </header>
 
           <div className="mt-8 flex items-center gap-4">
-            <div className="flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
+            <div className="relative flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
               <Search className="w-4 h-4 text-slate-400" />
               <input
                 type="text"
+                value={search}
+                onChange={handleSearch}
                 placeholder="Search products"
                 className="bg-transparent focus:outline-none w-full text-sm"
               />
@@ -203,7 +220,7 @@ const Page = () => {
 
           {/* ........ PRODUCT TABLE ............. */}
           <ProductTable
-            products={products}
+            products={filteredProducts}
             getStatusStyle={getStatusStyle}
             getStatusText={getStatusText}
             deleteProduct={deleteProduct}
