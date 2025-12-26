@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "@/components/ui/Modal";
 import BtnPrimary from "@/components/ui/BtnPrimary";
 
-const AddModal = ({ onClose, addForm, onSubmit }) => {
+const AddModal = ({ onClose, addForm, onSubmit, addLoading }) => {
   return (
     <div>
       <Modal
@@ -86,7 +86,11 @@ const AddModal = ({ onClose, addForm, onSubmit }) => {
                 className="border border-slate-200 rounded-lg px-3 py-2"
               />
             </label>
-            <BtnPrimary text="Add Product" type="submit" />
+            {addLoading ? (
+              <BtnPrimary text="Adding..." type="submit" disabled />
+            ) : (
+              <BtnPrimary text="Add Product" type="submit" />
+            )}
           </form>
         </div>
       </Modal>

@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "@/components/ui/Modal";
 import BtnPrimary from "@/components/ui/BtnPrimary";
 
-const EditModal = ({ onClose, updateForm, onUpdateProduct }) => {
+const EditModal = ({ onClose, updateForm, onUpdateProduct, updateLoading }) => {
   return (
     <div>
       <Modal
@@ -87,7 +87,11 @@ const EditModal = ({ onClose, updateForm, onUpdateProduct }) => {
                 className="border border-slate-200 rounded-lg px-3 py-2"
               />
             </label>
-            <BtnPrimary text="Update Product" type="submit" />
+            {updateLoading ? (
+              <BtnPrimary text="Updating..." type="submit" disabled />
+            ) : (
+              <BtnPrimary text="Update Product" type="submit" />
+            )}
           </form>
         </div>
       </Modal>

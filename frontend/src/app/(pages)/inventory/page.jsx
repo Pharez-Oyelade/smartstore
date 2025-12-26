@@ -17,6 +17,8 @@ const Page = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
   const [deletingProductId, setDeletingProductId] = useState(null);
 
   const [addProductModal, setAddProductModal] = useState(false);
@@ -85,6 +87,7 @@ const Page = () => {
       price: parseFloat(data.selling_price),
       stock: parseInt(data.stock),
     };
+    setAddLoading(true);
     try {
       const response = await api.post("/products/create", payload);
       console.log(response);
@@ -94,6 +97,8 @@ const Page = () => {
       fetchProducts();
     } catch (error) {
       console.log(error);
+    } finally {
+      setAddLoading(false);
     }
   };
 
@@ -103,6 +108,8 @@ const Page = () => {
       price: Number(data.selling_price),
       stockAdjustment: Number(data.stock) - selectedProduct.stock,
     };
+
+    setUpdateLoading(true);
 
     try {
       const response = await api.post(
@@ -115,6 +122,8 @@ const Page = () => {
       fetchProducts();
     } catch (error) {
       console.log(error);
+    } finally {
+      setUpdateLoading(false);
     }
   };
 
@@ -211,6 +220,7 @@ const Page = () => {
               }}
               addForm={addForm}
               onSubmit={onSubmit}
+              addLoading={addLoading}
             />
           )}
 
@@ -223,6 +233,7 @@ const Page = () => {
               }}
               updateForm={updateForm}
               onUpdateProduct={onUpdateProduct}
+              updateLoading={updateLoading}
             />
           )}
         </>
