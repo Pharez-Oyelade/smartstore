@@ -11,6 +11,7 @@ import InventoryLoader from "@/components/ui/InventoryLoader";
 import { useForm } from "react-hook-form";
 import EditModal from "./components/EditModal";
 import AddModal from "./components/AddModal";
+import Title from "@/components/ui/Title";
 
 const Page = () => {
   const [products, setProducts] = useState([]);
@@ -191,21 +192,15 @@ const Page = () => {
         <InventoryLoader />
       ) : (
         <>
-          <header className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-extrabold">Products</h1>
-              <p className="text-slate-500 text-sm">
-                Manage your inventory, prices, and stock levels
-              </p>
-            </div>
-            <BtnPrimary
-              onClick={() => {
-                addForm.reset();
-                setAddProductModal(true);
-              }}
-              text="Add Product"
-            />
-          </header>
+          <Title
+            onClick={() => {
+              addForm.reset();
+              setAddProductModal(true);
+            }}
+            text="Add Product"
+            header="Products"
+            description="Manage your inventory, prices, and stock levels"
+          />
 
           <div className="mt-8 flex items-center gap-4">
             <div className="relative flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
