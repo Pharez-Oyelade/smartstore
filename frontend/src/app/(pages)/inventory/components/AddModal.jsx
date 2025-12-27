@@ -53,9 +53,12 @@ const AddModal = ({ onClose, addForm, onSubmit, addLoading }) => {
               <label htmlFor="" className="flex flex-col gap-2">
                 <span className="text-black text-sm">Cost Price</span>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Product Price"
                   className="border border-slate-200 rounded-lg px-3 py-2 w-full"
+                  {...addForm.register("cost", {
+                    valueAsNumber: true,
+                  })}
                 />
               </label>
             </div>
@@ -84,6 +87,7 @@ const AddModal = ({ onClose, addForm, onSubmit, addLoading }) => {
                 type="text"
                 placeholder="Product Category"
                 className="border border-slate-200 rounded-lg px-3 py-2"
+                {...addForm.register("category")}
               />
             </label>
             {addLoading ? (

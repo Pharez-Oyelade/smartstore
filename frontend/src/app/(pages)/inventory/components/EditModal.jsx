@@ -36,6 +36,7 @@ const EditModal = ({ onClose, updateForm, onUpdateProduct, updateLoading }) => {
                 type="text"
                 placeholder="Product Description"
                 className="border border-slate-200 rounded-lg px-3 py-2"
+                {...updateForm.register("description")}
               />
             </label>
 
@@ -54,9 +55,12 @@ const EditModal = ({ onClose, updateForm, onUpdateProduct, updateLoading }) => {
               <label htmlFor="" className="flex flex-col gap-2">
                 <span className="text-black text-sm">Cost Price</span>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Product Price"
                   className="border border-slate-200 rounded-lg px-3 py-2 w-full"
+                  {...updateForm.register("cost", {
+                    valueAsNumber: true,
+                  })}
                 />
               </label>
             </div>
@@ -85,6 +89,7 @@ const EditModal = ({ onClose, updateForm, onUpdateProduct, updateLoading }) => {
                 type="text"
                 placeholder="Product Category"
                 className="border border-slate-200 rounded-lg px-3 py-2"
+                {...updateForm.register("category")}
               />
             </label>
             {updateLoading ? (

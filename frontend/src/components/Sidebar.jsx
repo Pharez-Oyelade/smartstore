@@ -24,7 +24,7 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
 
   const isActiveClass = (path) =>
-    pathname === path ? "bg-blue-100/50 font-semibold" : "";
+    pathname === path ? "bg-blue-100/50 text-blue-600 font-semibold" : "";
 
   // Ensure sidebar is closed on small screens initially
   useEffect(() => {
@@ -64,7 +64,7 @@ const Sidebar = () => {
       <aside
         className={`
           fixed top-0 left-0 h-full bg-white border-r border-gray-300 p-4 z-40
-          w-64 lg:w-60
+          w-64 xl:w-60
           transform transition-transform duration-300 ease-in-out
           ${open ? "translate-x-0" : "-translate-x-full"} 
           lg:translate-x-0

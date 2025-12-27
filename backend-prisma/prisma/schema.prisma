@@ -32,7 +32,9 @@ model Product {
   id          String  @id @default(uuid())
   name        String
   description String?
+  category    String?
   price       Float
+  cost        Float
   imageUrl    String?
   stock       Int
 

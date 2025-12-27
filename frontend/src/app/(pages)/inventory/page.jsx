@@ -46,8 +46,11 @@ const Page = () => {
   const updateForm = useForm({
     defaultValues: {
       name: "",
+      description: "",
       selling_price: "",
       stock: "",
+      category: "",
+      cost: "",
     },
   });
 
@@ -64,8 +67,11 @@ const Page = () => {
 
     updateForm.reset({
       name: product.name,
+      description: product.description,
       selling_price: product.price,
       stock: product.stock,
+      category: product.category,
+      cost: product.cost,
     });
 
     setUpdateProductModal(true);
@@ -96,7 +102,9 @@ const Page = () => {
     const payload = {
       name: data.name,
       price: parseFloat(data.selling_price),
+      cost: parseFloat(data.cost),
       stock: parseInt(data.stock),
+      category: data.category,
     };
     setAddLoading(true);
     try {
@@ -116,8 +124,11 @@ const Page = () => {
   const updateProduct = async (data) => {
     const payload = {
       name: data.name,
+      description: data.description,
       price: Number(data.selling_price),
+      cost: Number(data.cost),
       stockAdjustment: Number(data.stock) - selectedProduct.stock,
+      category: data.category,
     };
 
     setUpdateLoading(true);

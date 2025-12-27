@@ -2,7 +2,7 @@ import { prisma } from "../config/db.js";
 
 // create a new product
 const createProduct = async (req, res) => {
-  const { name, description, price, stock } = req.body;
+  const { name, description, price, cost, stock, category } = req.body;
   const userId = req.user.id; // get user id from auth middleware
 
   try {
@@ -11,7 +11,9 @@ const createProduct = async (req, res) => {
         name,
         description,
         price,
+        cost,
         stock,
+        category,
         createdBy: userId,
       },
     });
@@ -22,7 +24,9 @@ const createProduct = async (req, res) => {
         name: newProduct.name,
         description: newProduct.description,
         price: newProduct.price,
+        cost: newProduct.cost,
         stock: newProduct.stock,
+        category: newProduct.category,
         createdBy: newProduct.createdBy,
       },
     });
@@ -57,7 +61,7 @@ const updateProduct = async (req, res) => {
     const userId = req.user.id;
   const productId = req.params.id;
 
-  const {name, price, stockAdjustment} = req.body;
+  const {name, description, price, cost, stockAdjustment, category} = req.body;
 
   const product = await prisma.product.findFirst({
     where: {
@@ -77,8 +81,20 @@ const updateProduct = async (req, res) => {
     updateData.name = name;
   }
 
+  if (description !== undefined) {
+    updateData.description = description;
+  }
+
   if (price !== undefined) {
     updateData.price = price;
+  }
+
+  if (cost !== undefined) {
+    updateData.cost = cost;
+  }
+
+  if (category !== undefined) {
+    updateData.category = category;
   }
 
   // stock handled safely
