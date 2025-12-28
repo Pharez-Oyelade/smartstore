@@ -96,26 +96,75 @@ const createSale = async (req, res) => {
   }
 }
 
+// const getSales = async (req, res) => {
+//   try {
+//     const sales = await prisma.sale.findMany({
+//       where: {
+//         createdBy: req.user.id
+//       },
+//       include: {
+//         items: true,
+//         payment: true,
+//       }
+//     });
+//     return res.status(200).json({
+//       message: "Sales retrieved successfully",
+//       sales
+//     })
+//   } catch (error) {
+//     console.error(error)
+//     return res.status(500).json({
+//       message: "Failed to retrieve sales"
+//     })
+//   }
+// }
+
+
 const getSales = async (req, res) => {
   try {
     const sales = await prisma.sale.findMany({
       where: {
-        createdBy: req.user.id
+        createdBy: req.user.id,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
       include: {
-        items: true
-      }
+        items: true,
+        payment: true,
+      },
     });
+
+    const formattedSales = sales.map((sale) => {
+      const paymentStatus = sale.payment?.status || "UNPAID";
+
+      return {
+        id: sale.id,
+        createdAt: sale.createdAt,
+        totalAmount: sale.totalAmount,
+
+        itemsCount: sale.items.length,
+        items: sale.items,
+
+        payment: sale.payment,
+        paymentStatus,
+
+        isPaid: paymentStatus === "PAID",
+        isPending: paymentStatus === "PENDING" || paymentStatus === "UNPAID",
+      };
+    });
+
     return res.status(200).json({
       message: "Sales retrieved successfully",
-      sales
-    })
+      sales: formattedSales,
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.status(500).json({
-      message: "Failed to retrieve sales"
-    })
+      message: "Failed to retrieve sales",
+    });
   }
-}
+};
+
 
 export { createSale, getSales };
