@@ -20,6 +20,7 @@ const page = () => {
 
   const [products, setProducts] = useState([]);
   const [createSale, setCreateSale] = useState(false);
+  const [sales, setSales] = useState([]);
 
   const getProducts = async () => {
     const response = await api.get("/products/get");
@@ -37,7 +38,21 @@ const page = () => {
     });
     console.log(response.data);
     clearCart();
+    getSales();
   };
+
+  const getSales = async () => {
+    try {
+      const response = await api.get("/sales/get");
+      setSales(response.data.sales);
+    } catch (error) {
+      console.error("Failed to fetch sales:", error);
+    }
+  };
+
+  useEffect(() => {
+    getSales();
+  }, []);
 
   return (
     <div className="p-4">
@@ -53,6 +68,33 @@ const page = () => {
       />
 
       <div className=" mt-8">
+        {!createSale && (
+          <div>
+            {sales.length > 0 ? (
+              <div className="w-full">
+                {sales.map((sale) => (
+                  <div
+                    key={sale.id}
+                    className="flex items-center justify-between w-full border-b border-slate-200 p-4"
+                  >
+                    <p>#{sale.id}</p>
+                    <p>{sale.paymentMethod}</p>
+                    <p>{sale.paymentStatus}</p>
+                    <p>{sale.totalAmount.toLocaleString()}</p>
+                    <p>
+                      {new Date(sale.createdAt).toLocaleDateString("en-GB")}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>
+                <p>No sales found</p>
+              </div>
+            )}
+          </div>
+        )}
+
         <div>
           {createSale && (
             <div className={`w-[${cart.length > 0 ? "70%" : "100%"}]`}>
