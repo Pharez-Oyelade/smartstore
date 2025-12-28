@@ -76,8 +76,8 @@ const Sidebar = () => {
             <Store size={28} color="#fff" />
           </div>
           <div>
-            <h1 className="text-xl font-bold">SmartStore</h1>
-            <p className="text-xs text-gray-500">Lite Admin</p>
+            <h1 className="text-xl font-bold">Vendora</h1>
+            <p className="text-xs text-gray-500">Admin</p>
           </div>
         </div>
 

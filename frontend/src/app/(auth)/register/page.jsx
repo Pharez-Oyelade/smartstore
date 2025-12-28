@@ -101,7 +101,7 @@ const page = () => {
               <div className="bg-[#0070f3] p-2 rounded-xl inline-block my-4">
                 <Store size={28} color="#fff" />
               </div>
-              <h1 className="text-3xl font-bold">SmartStore Lite</h1>
+              <h1 className="text-3xl font-bold">Vendora</h1>
             </div>
 
             <div className="mt-auto w-2/4">
@@ -113,9 +113,8 @@ const page = () => {
                 <Star size={20} color="#fdcc0d" />
               </div>
               <h1 className="text-2xl mt-2 font-medium">
-                "Since switching to SmartStore Lite, managing my inventory in
-                Lagos has been seamless. I save 10 hours a week on bookkeeping
-                alone."
+                "Since switching to Vendora, managing my inventory in Lagos has
+                been seamless. I save 10 hours a week on bookkeeping alone."
               </h1>
               <div>
                 <p className="mt-2 text-sm">- Chinedu Okafor, Lagos</p>

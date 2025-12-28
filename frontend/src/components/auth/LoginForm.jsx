@@ -45,7 +45,7 @@ const LoginForm = ({ register, handleSubmit, onSubmit, isLoading }) => {
         </form>
       </div>
       <div className="text-center text-gray-500 text-sm mt-6">
-        &copy; 2024 SmartStore Lite. All rights reserved.
+        &copy; 2025 Vendora. All rights reserved.
       </div>
     </div>
   );
