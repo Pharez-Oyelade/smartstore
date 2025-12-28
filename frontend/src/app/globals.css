@@ -85,6 +85,8 @@ a.active {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-navbar-bg: var(--navbar-bg);
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-accent: var(--accent);
