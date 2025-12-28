@@ -203,8 +203,8 @@ const Page = () => {
           />
 
           <div className="mt-8 flex items-center gap-4">
-            <div className="relative flex items-center gap-3 border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg w-[40%]">
-              <Search className="w-4 h-4 text-slate-400" />
+            <div className="relative flex items-center gap-3 border bg-surface border-border shadow-sm px-3 py-2 rounded-lg w-[40%]">
+              <Search className="w-4 h-4 text-muted" />
               <input
                 type="text"
                 value={search}

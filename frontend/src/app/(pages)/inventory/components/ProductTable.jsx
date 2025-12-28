@@ -12,10 +12,10 @@ const ProductTable = ({
 }) => {
   return (
     <div>
-      <div className="mt-8 overflow-hidden border border-slate-200 rounded-xl bg-white shadow-sm">
+      <div className="mt-8 overflow-hidden border border-border rounded-xl bg-surface color-foreground  shadow-sm">
         <table className="w-full border-collapse">
-          <thead className="bg-gray-100">
-            <tr className="border-b border-slate-100 text-slate-400 uppercase text-[11px] font-semibold tracking-wider">
+          <thead className="bg-surface">
+            <tr className="border-b border-border text-muted uppercase text-[11px] font-semibold tracking-wider">
               <th className="px-6 py-4 text-left">Product Name</th>
               <th className="px-6 py-4 text-left">Category</th>
               <th className="px-6 py-4 text-left">Price (₦)</th>
@@ -24,7 +24,7 @@ const ProductTable = ({
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y divide-surface">
             {products.map((product) => {
               const isDeleting = deletingProductId === product.id;
 
@@ -44,30 +44,30 @@ const ProductTable = ({
               return (
                 <tr
                   key={product.id}
-                  className="hover:bg-slate-50/50 transition-colors border-b border-slate-100"
+                  className="hover:bg-slate-50/20 transition-colors border-b border-border"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 border border-slate-200">
+                      <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-muted border border-border">
                         <Package size={20} />
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-700 text-sm">
+                        <div className="font-semibold text-foreground text-sm">
                           {product.name}
                         </div>
-                        <div className="text-xs text-slate-400 uppercase tracking-tight">
+                        <div className="text-xs text-muted uppercase tracking-tight">
                           SKU: {product.sku || "N/A"}
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-500">
+                  <td className="px-6 py-4 text-sm text-muted">
                     {product.category || "General"}
                   </td>
-                  <td className="px-6 py-4 text-sm font-semibold text-slate-700">
+                  <td className="px-6 py-4 text-sm font-semibold text-foreground">
                     ₦{Number(product.price).toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-500">
+                  <td className="px-6 py-4 text-sm text-muted">
                     {product.stock} Units
                   </td>
                   <td className="px-6 py-4">
@@ -82,14 +82,14 @@ const ProductTable = ({
                   <td className="px-6 py-8 text-right flex gap-3 justify-end items-center">
                     <button
                       onClick={() => openEditModal(product)}
-                      className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                      className="text-muted hover:text-foreground cursor-pointer"
                       title="Edit"
                     >
                       <Pencil size={18} />
                     </button>
                     <button
                       onClick={() => deleteAlert(product)}
-                      className="text-slate-400 hover:text-slate-600 cursor-pointer"
+                      className="text-muted hover:text-foreground cursor-pointer"
                       title="Delete"
                     >
                       <Trash2 size={18} />
