@@ -4,7 +4,7 @@ import { CirclePlay } from "lucide-react";
 const Hero = () => {
   return (
     <section className="relative w-full h-[calc(100vh-4rem)] py-16 md:py-24 px-4 md:px-10 overflow-hidden bg-background text-foreground">
-      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
+      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 my-10">
         <div className="flex flex-col gap-6 lg:w-1/2 z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 w-fit">
             <span className="w-2 h-2 rounded-full bg-accent"></span>
@@ -61,7 +61,7 @@ const Hero = () => {
         </div>
         <div className="lg:w-1/2 w-full relative">
           <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full opacity-50 z-0"></div>
-          <div className="relative z-10 w-full aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-border bg-surface group">
+          <div className="relative z-10 w-full aspect-4/3 rounded-xl overflow-hidden shadow-2xl border border-border bg-surface group">
             <div
               className="absolute inset-0 bg-cover bg-center"
               data-alt="Modern dashboard interface on a laptop screen showing sales charts"
@@ -70,7 +70,7 @@ const Hero = () => {
                   "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBmW7nbHHtaiT_sBCh_xon1JfMQlwyNRiictTum1yEx8IfQa3p_fxekYoOjZyEx2bmgYqH2RDp5Cc85aQjJPT949Aw_2huFKScSj8ywAehWHs8XIvTg2pOzIrTe0CayDDH_-jmUFv3qGUegcyiVtwRKRBRvkLYpKJKWWraMdJ-5kFNvikIcLBpzebqAESp7A3DcOlMNTqD2HuvkDeKgkWbEJYpp7p0-BqZ2J11uH7DkFbm0Cy-yutGDUOGO225uzkkfZcec_2HqQ8')",
               }}
             ></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent"></div>
 
             <div className="absolute bottom-6 left-6 right-6 bg-surface/95 backdrop-blur p-4 rounded-lg border border-border shadow-lg">
               <div className="flex justify-between items-center mb-2">
