@@ -1,6 +1,7 @@
 import express from "express";
 import { createSale, getSales } from "../controllers/sales.controller.js";
 import { authUser } from "../middleware/auth.middleware.js";
+import { makePayment } from "../controllers/payment.controller.js";
 
 const salesRouter = express.Router();
 
@@ -8,5 +9,7 @@ const salesRouter = express.Router();
 
 salesRouter.post("/create", authUser, createSale);
 salesRouter.get("/get", authUser, getSales);
+
+salesRouter.post("/:saleId/pay", authUser, makePayment);
 
 export default salesRouter;

@@ -4,6 +4,7 @@ import Title from "@/components/ui/Title";
 import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import api from "@/lib/axios";
+import SalesTable from "./components/SalesTable";
 
 const page = () => {
   // get products when create sale is selected - ui chnages from sale history to create sale - products displayed in grid in the create sale page with add to cart button and the cart is displayed in the right side of the page
@@ -54,6 +55,38 @@ const page = () => {
     getSales();
   }, []);
 
+  const paySale = async (saleId) => {
+    try {
+      const res = await api.post(`/sales/${saleId}/pay`, {
+        paymentMethod: "CASH",
+      });
+
+      console.log(res.data);
+      getSales(); // refresh sales list
+    } catch (err) {
+      console.error("Payment failed", err);
+    }
+  };
+
+  // get total pending payments, if sale.paymentStatus === "pending" then add sale.totalAmount to totalPendingPayments
+  // const totalPendingPayments = sales.reduce((total, sale) => {
+  //   if (sale.paymentStatus === "pending") {
+  //     return total + sale.totalAmount;
+  //   }
+  //   return total;
+  // }, 0);
+
+  const totalPendingPayments = sales.reduce((sum, sale) => {
+    if (sale.isPending) {
+      return sum + sale.totalAmount;
+    }
+    return sum;
+  }, 0);
+
+  const totalRevenue = sales.reduce((sum, sale) => {
+    return sum + sale.totalAmount;
+  }, 0);
+
   return (
     <div className="p-4">
       <Title
@@ -67,37 +100,41 @@ const page = () => {
         onClick={() => setCreateSale(!createSale)}
       />
 
-      <div className=" mt-8">
-        {!createSale && (
-          <div>
-            {sales.length > 0 ? (
-              <div className="w-full">
-                {sales.map((sale) => (
-                  <div
-                    key={sale.id}
-                    className="flex items-center justify-between w-full border-b border-slate-200 p-4"
-                  >
-                    <p>#{sale.id}</p>
-                    <p>{sale.paymentMethod}</p>
-                    <p>{sale.paymentStatus}</p>
-                    <p>{sale.totalAmount.toLocaleString()}</p>
-                    <p>
-                      {new Date(sale.createdAt).toLocaleDateString("en-GB")}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div>
-                <p>No sales found</p>
-              </div>
-            )}
+      {/*page shows total revenue, pending payments and total sales  */}
+
+      {!createSale && (
+        <div className=" mt-8 flex items-center justify-between">
+          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
+            <p>Total Revenue </p>
+            <p className="text-3xl font-bold">
+              ₦ {totalRevenue.toLocaleString()}
+            </p>
+            <p className="text-sm text-slate-500">{sales.length} sales</p>
           </div>
-        )}
+          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
+            <p>Pending Payments</p>
+            <p className="text-3xl font-bold">
+              ₦ {totalPendingPayments.toLocaleString()}
+            </p>
+            <p className="text-sm text-slate-500">
+              {sales.filter((sale) => sale.isPending).length} invoices pending
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
+            <p>Total Sales</p>
+            <p className="text-3xl font-bold">{sales.length}</p>
+            <p className="text-sm text-slate-500">
+              {sales.filter((sale) => sale.isPaid).length} invoices paid
+            </p>
+          </div>
+        </div>
+      )}
+      <div className=" mt-8">
+        {!createSale && <SalesTable sales={sales} paySale={paySale} />}
 
         <div>
           {createSale && (
-            <div className={`w-[${cart.length > 0 ? "70%" : "100%"}]`}>
+            <div className={cart.length > 0 ? "w-[70%]" : "w-full"}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {products.map((product) => (
                   <div

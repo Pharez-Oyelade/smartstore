@@ -149,7 +149,7 @@ const getSales = async (req, res) => {
         payment: sale.payment,
         paymentStatus,
 
-        isPaid: paymentStatus === "PAID",
+        isPaid: paymentStatus === "COMPLETED",
         isPending: paymentStatus === "PENDING" || paymentStatus === "UNPAID",
       };
     });
