@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center p-4 bg-surface border-b border-border">
+    <nav className="flex justify-between items-center px-40 py-4 bg-surface border-b border-border shadow-xl">
       <div className="flex items-center gap-2">
-        <Store />
-        <h1>Vendora</h1>
+        <Store className="w-10 h-10 bg-accent p-2 rounded-md text-white" />
+        <h1 className="text-2xl font-bold">Vendora</h1>
       </div>
 
       <ul className="flex gap-5">
