@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { FaInstagram, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
 
 const Footer = () => {
@@ -26,17 +27,33 @@ const Footer = () => {
 
         <div className="flex flex-col gap-4">
           <h4 className="font-bold">Product</h4>
-          <p className="text-gray-500">Features</p>
-          <p className="text-gray-500">Pricing</p>
-          <p className="text-gray-500">Security</p>
-          <p className="text-gray-500">Resources</p>
+          <Link href="/features" className="text-gray-500">
+            Features
+          </Link>
+          <Link href="/pricing" className="text-gray-500">
+            Pricing
+          </Link>
+          <Link href="/" className="text-gray-500">
+            Security
+          </Link>
+          <Link href="/" className="text-gray-500">
+            Resources
+          </Link>
         </div>
         <div className="flex flex-col gap-4">
           <h4 className="font-bold">Company</h4>
-          <p className="text-gray-500">About Us</p>
-          <p className="text-gray-500">Contact</p>
-          <p className="text-gray-500">Privacy Policy</p>
-          <p className="text-gray-500">Terms & Conditions</p>
+          <Link href="/about" className="text-gray-500">
+            About Us
+          </Link>
+          <Link href="/contact" className="text-gray-500">
+            Contact
+          </Link>
+          <Link href="/privacy" className="text-gray-500">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="text-gray-500">
+            Terms & Conditions
+          </Link>
         </div>
       </div>
 
