@@ -66,8 +66,7 @@ const Hero = () => {
               className="absolute inset-0 bg-cover bg-center"
               data-alt="Modern dashboard interface on a laptop screen showing sales charts"
               style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBmW7nbHHtaiT_sBCh_xon1JfMQlwyNRiictTum1yEx8IfQa3p_fxekYoOjZyEx2bmgYqH2RDp5Cc85aQjJPT949Aw_2huFKScSj8ywAehWHs8XIvTg2pOzIrTe0CayDDH_-jmUFv3qGUegcyiVtwRKRBRvkLYpKJKWWraMdJ-5kFNvikIcLBpzebqAESp7A3DcOlMNTqD2HuvkDeKgkWbEJYpp7p0-BqZ2J11uH7DkFbm0Cy-yutGDUOGO225uzkkfZcec_2HqQ8')",
+                backgroundImage: "url('/images/feature_1.jpg')",
               }}
             ></div>
             <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent"></div>
