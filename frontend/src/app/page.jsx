@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProblemCards from "@/components/ProblemCards";
+import Features from "@/components/Features";
 
 const page = () => {
   return (
@@ -11,6 +12,7 @@ const page = () => {
       <Navbar />
       <Hero />
       <ProblemCards />
+      <Features />
     </div>
   );
 };
