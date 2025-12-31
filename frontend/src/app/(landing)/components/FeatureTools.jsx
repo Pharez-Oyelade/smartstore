@@ -57,19 +57,19 @@ const FeatureTools = () => {
         {tools.map((tool, index) => (
           <div
             key={index}
-            className="flex flex-col items-start gap-5 bg-sky-500/5 p-6 rounded-xl h-[200px]"
+            className="flex flex-col items-start gap-5 bg-blue-500/5 p-6 rounded-xl h-[200px]"
           >
-            <div className="flex items-center gap-2 bg-sky-500/10 text-sky-500 p-2 rounded-xl">
+            <div className="flex items-center gap-2 bg-blue-500/10 text-blue-500 p-2 rounded-xl">
               {tool.icon}
             </div>
             <h2 className="text-lg font-bold">{tool.title}</h2>
             <p className="text-muted">{tool.description}</p>
           </div>
         ))}
-        <div className="flex flex-col justify-center gap-2 bg-sky-500 text-white px-5 rounded-xl h-[200px] text-center">
+        <div className="flex flex-col justify-center gap-2 bg-blue-500 text-white px-5 rounded-xl h-[200px] text-center">
           <h4 className="text-2xl font-bold">Ready to start?</h4>
           <p>Join hundereds of store owners simplifying their business today</p>
-          <button className="bg-white text-sky-500 px-5 py-2 rounded-xl font-bold text-lg">
+          <button className="bg-white text-blue-500 px-5 py-2 rounded-xl font-bold text-lg">
             Get Started Free
           </button>
         </div>
