@@ -194,6 +194,7 @@ const page = () => {
           title="Ready to organize your business?"
           details="Join thousands of store owners growing with Vendora."
           btnText="Start Free Now"
+          href="#"
         />
       </div>
     </main>

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   ShoppingCart,
   Archive,
@@ -69,9 +70,11 @@ const FeatureTools = () => {
         <div className="flex flex-col justify-center gap-2 bg-blue-500 text-white px-5 rounded-xl h-[200px] text-center">
           <h4 className="text-2xl font-bold">Ready to start?</h4>
           <p>Join hundereds of store owners simplifying their business today</p>
-          <button className="bg-white text-blue-500 px-5 py-2 rounded-xl font-bold text-lg">
-            Get Started Free
-          </button>
+          <Link href="/pricing">
+            <button className="bg-white text-blue-500 px-5 py-2 rounded-xl font-bold text-lg w-full hover:scale-[1.05] transition-all cursor-pointer">
+              Get Started Free
+            </button>
+          </Link>
         </div>
       </div>
     </section>

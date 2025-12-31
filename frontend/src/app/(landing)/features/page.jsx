@@ -1,5 +1,6 @@
 import React from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import Link from "next/link";
 import FeatureTools from "../components/FeatureTools";
 import WhySection from "../components/WhySection";
 import Cta from "../components/Cta";
@@ -21,9 +22,11 @@ const page = () => {
               growing businesses.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-4">
-              <button className="btn-primary flex items-center justify-center font-bold text-base transition-all transform hover:scale-105">
-                Try the Dashboard
-              </button>
+              <Link href="/pricing">
+                <button className="btn-primary flex items-center justify-center font-bold text-base transition-all transform hover:scale-105">
+                  Try the Dashboard
+                </button>
+              </Link>
               <button className="flex items-center justify-center h-[46px] px-6 rounded-lg border border-border bg-surface text-foreground font-bold text-base hover:bg-muted/10 transition-colors">
                 View Demo
               </button>
@@ -85,6 +88,7 @@ const page = () => {
         title="Ready to organize your shop?"
         details="Stop using pen and paper. Switch to the modern way to manage your business today."
         btnText="Try the Dashboard"
+        href="/pricing"
       />
     </div>
   );
