@@ -5,14 +5,16 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <nav className="flex justify-between items-center px-40 py-4 bg-surface border-b border-border shadow-xl">
-      <div className="flex items-center gap-2">
-        <Store className="w-10 h-10 bg-accent p-2 rounded-md text-white" />
-        <h1 className="text-2xl font-bold">Vendora</h1>
-      </div>
+      <Link href="/">
+        <div className="flex items-center gap-2">
+          <Store className="w-10 h-10 bg-accent p-2 rounded-md text-white" />
+          <h1 className="text-2xl font-bold">Vendora</h1>
+        </div>
+      </Link>
 
       <ul className="flex gap-5">
         <li>
-          <Link href="#">Features</Link>
+          <Link href="/features">Features</Link>
         </li>
         <li>
           <Link href="#">How it Works</Link>
