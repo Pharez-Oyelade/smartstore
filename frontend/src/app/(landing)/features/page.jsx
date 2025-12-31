@@ -1,6 +1,7 @@
 import React from "react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import FeatureTools from "../components/FeatureTools";
+import WhySection from "../components/WhySection";
 
 const page = () => {
   return (
@@ -78,6 +79,7 @@ const page = () => {
 
       {/* other sections */}
       <FeatureTools />
+      <WhySection />
     </div>
   );
 };
