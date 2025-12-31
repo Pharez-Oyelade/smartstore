@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 import { MdCurrencyExchange } from "react-icons/md";
 import { GoXCircle } from "react-icons/go";
 import { FaShieldHalved } from "react-icons/fa6";
+import Cta from "../components/Cta";
 
 const page = () => {
   const [checked, setChecked] = useState(false);
@@ -186,6 +187,14 @@ const page = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="mt-10">
+        <Cta
+          title="Ready to organize your business?"
+          details="Join thousands of store owners growing with Vendora."
+          btnText="Start Free Now"
+        />
       </div>
     </main>
   );
