@@ -8,6 +8,7 @@ import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonial from "@/components/Testimonial";
 import CallToAction from "@/components/CallToAction";
+import Footer from "@/components/Footer";
 
 const page = () => {
   return (
@@ -19,6 +20,7 @@ const page = () => {
       <HowItWorks />
       <Testimonial />
       <CallToAction />
+      <Footer />
     </div>
   );
 };
