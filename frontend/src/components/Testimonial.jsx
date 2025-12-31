@@ -71,7 +71,7 @@ const Testimonial = () => {
 
         <div>
           <p className="font-semibold text-lg">
-            Since switching to SmartStore, I haven't lost a single Naira to
+            Since switching to Vendora, I haven't lost a single Naira to
             calculation errors. It works perfectly on my phone even when the
             network is bad.
           </p>
