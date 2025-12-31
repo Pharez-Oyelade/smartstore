@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const CallToAction = () => {
   return (
@@ -13,13 +14,17 @@ const CallToAction = () => {
       </p>
 
       <div className="flex gap-5">
-        <button className="bg-blue-500 text-white px-10 py-5 rounded-xl">
-          Get Started for Free
-        </button>
+        <Link href="/pricing">
+          <button className="bg-blue-500 text-white px-10 py-5 rounded-xl cursor-pointer">
+            Get Started for Free
+          </button>
+        </Link>
 
-        <button className="bg-transparent text-black border border-black px-10 py-5 rounded-xl">
-          Learn More
-        </button>
+        <Link href="/howitworks">
+          <button className="bg-transparent text-black border border-black px-10 py-5 rounded-xl">
+            Learn More
+          </button>
+        </Link>
       </div>
 
       <p className="text-gray-600 text-sm">Free 14-day trial on all plans.</p>
