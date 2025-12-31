@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProblemCards from "@/components/ProblemCards";
 import Features from "@/components/Features";
+import HowItWorks from "@/components/HowItWorks";
 
 const page = () => {
   return (
@@ -13,6 +14,7 @@ const page = () => {
       <Hero />
       <ProblemCards />
       <Features />
+      <HowItWorks />
     </div>
   );
 };
