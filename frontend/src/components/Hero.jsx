@@ -1,17 +1,13 @@
 import React from "react";
 import { CirclePlay } from "lucide-react";
+import Indicator from "./ui/Indicator";
 
 const Hero = () => {
   return (
     <section className="relative w-full h-[calc(100vh-4rem)] py-16 md:py-24 px-4 md:px-10 overflow-hidden bg-background text-foreground">
       <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 my-10">
         <div className="flex flex-col gap-6 lg:w-1/2 z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 w-fit">
-            <span className="w-2 h-2 rounded-full bg-accent"></span>
-            <span className="text-xs font-bold text-accent tracking-wide uppercase">
-              New for Nigerian Businesses
-            </span>
-          </div>
+          <Indicator text="New for Nigerian Businesses" />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground">
             Track Sales and Inventory{" "}
             <span className="text-accent">Without Stress</span>
