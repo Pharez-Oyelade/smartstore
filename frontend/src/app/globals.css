@@ -48,8 +48,6 @@ a.active {
   background: rgb(23, 23, 235);
 } */
 
-
-
 @import "tailwindcss";
 
 /* ===============================
@@ -58,22 +56,22 @@ a.active {
 
 :root {
   /* App surfaces */
-  --background: #f4f6f8;        /* main app canvas */
-  --surface: #ffffff;          /* cards, tables */
+  --background: #f4f6f8; /* main app canvas */
+  --surface: #ffffff; /* cards, tables */
   --sidebar-bg: #ffffff;
   --navbar-bg: #ffffff;
 
   /* Text */
-  --foreground: #0f172a;       /* primary text */
-  --muted: #64748b;            /* secondary text */
+  --foreground: #0f172a; /* primary text */
+  --muted: #64748b; /* secondary text */
 
   /* Borders */
   --border: #e2e8f0;
 
   /* Brand */
-  --accent: #2563eb;           /* blue-600 */
-  --accent-hover: #1d4ed8;     /* blue-700 */
-  --accent-soft: #2563eb1a;    /* soft blue background */
+  --accent: #2563eb; /* blue-600 */
+  --accent-hover: #1d4ed8; /* blue-700 */
+  --accent-soft: #2563eb1a; /* soft blue background */
 
   /* Status */
   --success: #16a34a;
@@ -90,6 +88,8 @@ a.active {
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
   --color-muted: var(--muted);
 }
 

@@ -1,8 +1,14 @@
+"use client";
 import React from "react";
 import { Store } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  const isActive = (path) => pathname === path;
+
   return (
     <nav className="flex justify-between items-center px-40 py-4 bg-surface border-b border-border shadow-xl">
       <Link href="/">
@@ -14,21 +20,47 @@ const Navbar = () => {
 
       <ul className="flex gap-5">
         <li>
-          <Link href="/features">Features</Link>
+          <Link
+            href="/features"
+            className={`px-3 py-2 rounded-md transition-colors hover:text-accent ${
+              isActive("/features") ? "active" : ""
+            }`}
+          >
+            Features
+          </Link>
         </li>
         <li>
-          <Link href="/howitworks">How it Works</Link>
+          <Link
+            href="/howitworks"
+            className={`px-3 py-2 rounded-md transition-colors hover:text-accent ${
+              isActive("/howitworks") ? "active" : ""
+            }`}
+          >
+            How it Works
+          </Link>
         </li>
         <li>
-          <Link href="/pricing">Pricing</Link>
+          <Link
+            href="/pricing"
+            className={`px-3 py-2 rounded-md transition-colors hover:text-accent ${
+              isActive("/pricing") ? "active" : ""
+            }`}
+          >
+            Pricing
+          </Link>
         </li>
         <li>
-          <Link href="#">Contact</Link>
+          <Link
+            href="#"
+            className="px-3 py-2 rounded-md transition-colors hover:text-accent"
+          >
+            Contact
+          </Link>
         </li>
       </ul>
 
       <Link href="/login">
-        <button className="bg-accent text-white px-4 py-2 rounded">
+        <button className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover transition-colors">
           Login
         </button>
       </Link>
