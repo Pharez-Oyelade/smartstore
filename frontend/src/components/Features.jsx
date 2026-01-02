@@ -27,13 +27,13 @@ const Features = () => {
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
-        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl">
+        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl group">
           <Image
             src="/images/feature_1.jpg"
             alt=""
             height={400}
             width={400}
-            className="w-full object-cover hover:scale-110 transition-all duration-300"
+            className="w-full object-cover group-hover:scale-110 transition-all duration-300"
           />
           <div className="flex flex-col gap-2 items-start bg-white absolute top-[25%] translate-y-[25%] w-full h-full p-5">
             <div className="text-blue-700 text-2xl bg-blue-700/20 rounded-full p-3">
@@ -47,13 +47,13 @@ const Features = () => {
           </div>
         </div>
 
-        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl">
+        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl group">
           <Image
             src="/images/feature_2.jpg"
             alt=""
             height={400}
             width={400}
-            className="w-full object-cover hover:scale-110 transition-all duration-300"
+            className="w-full object-cover group-hover:scale-110 transition-all duration-300"
           />
           <div className="flex flex-col gap-2 items-start bg-white absolute top-[25%] translate-y-[25%] w-full h-full p-5">
             <div className="text-blue-700 text-2xl bg-blue-700/20 rounded-full p-3">
@@ -67,13 +67,13 @@ const Features = () => {
           </div>
         </div>
 
-        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl">
+        <div className="flex flex-col overflow-hidden h-[45vh] relative rounded-2xl group">
           <Image
             src="/images/feature_3.jpg"
             alt=""
             height={400}
             width={400}
-            className="w-full object-cover hover:scale-110 transition-all duration-300"
+            className="w-full object-cover group-hover:scale-110 transition-all duration-300"
           />
           <div className="flex flex-col gap-2 items-start bg-white absolute top-[25%] translate-y-[25%] w-full h-full p-5">
             <div className="text-blue-700 text-2xl bg-blue-700/20 rounded-full p-3">
