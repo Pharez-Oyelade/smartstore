@@ -5,8 +5,11 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import api from "@/lib/axios";
 import SalesTable from "./components/SalesTable";
+import { useSales } from "@/context/SalesContext";
+import DashboardCards from "../components/DashboardCards";
 
 const page = () => {
+  const { sales, totalRevenue, fetchSales } = useSales();
   // get products when create sale is selected - ui chnages from sale history to create sale - products displayed in grid in the create sale page with add to cart button and the cart is displayed in the right side of the page
   const {
     cart,
@@ -21,7 +24,6 @@ const page = () => {
 
   const [products, setProducts] = useState([]);
   const [createSale, setCreateSale] = useState(false);
-  const [sales, setSales] = useState([]);
 
   const getProducts = async () => {
     const response = await api.get("/products/get");
@@ -39,20 +41,20 @@ const page = () => {
     });
     console.log(response.data);
     clearCart();
-    getSales();
+    fetchSales();
   };
 
-  const getSales = async () => {
-    try {
-      const response = await api.get("/sales/get");
-      setSales(response.data.sales);
-    } catch (error) {
-      console.error("Failed to fetch sales:", error);
-    }
-  };
+  // const getSales = async () => {
+  //   try {
+  //     const response = await api.get("/sales/get");
+  //     setSales(response.data.sales);
+  //   } catch (error) {
+  //     console.error("Failed to fetch sales:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    getSales();
+    fetchSales();
   }, []);
 
   const paySale = async (saleId) => {
@@ -83,9 +85,9 @@ const page = () => {
     return sum;
   }, 0);
 
-  const totalRevenue = sales.reduce((sum, sale) => {
-    return sum + sale.totalAmount;
-  }, 0);
+  // const totalRevenue = sales.reduce((sum, sale) => {
+  //   return sum + sale.totalAmount;
+  // }, 0);
 
   return (
     <div className="p-4">
@@ -103,32 +105,21 @@ const page = () => {
       {/*page shows total revenue, pending payments and total sales  */}
 
       {!createSale && (
-        <div className=" mt-8 flex items-center justify-between">
-          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
-            <p>Total Revenue </p>
-            <p className="text-3xl font-bold">
-              ₦ {totalRevenue.toLocaleString()}
-            </p>
-            <p className="text-sm text-slate-500">{sales.length} sales</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
-            <p>Pending Payments</p>
-            <p className="text-3xl font-bold">
-              ₦ {totalPendingPayments.toLocaleString()}
-            </p>
-            <p className="text-sm text-slate-500">
-              {sales.filter((sale) => sale.isPending).length} invoices pending
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg w-[30%] flex flex-col gap-2 shadow-md">
-            <p>Total Sales</p>
-            <p className="text-3xl font-bold">{sales.length}</p>
-            <p className="text-sm text-slate-500">
-              {sales.filter((sale) => sale.isPaid).length} invoices paid
-            </p>
-          </div>
-        </div>
+        <DashboardCards
+          header1="Total Revenue"
+          value1={totalRevenue.toLocaleString()}
+          text1={sales.length + " sales"}
+          header2="Pending Payments"
+          value2={totalPendingPayments.toLocaleString()}
+          text2={
+            sales.filter((sale) => sale.isPending).length + " invoices pending"
+          }
+          header3="Total Sales"
+          value3={sales.length}
+          text3={sales.filter((sale) => sale.isPaid).length + " invoices paid"}
+        />
       )}
+
       <div className=" mt-8">
         {!createSale && <SalesTable sales={sales} paySale={paySale} />}
 
