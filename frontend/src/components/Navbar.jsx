@@ -1,11 +1,18 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Store } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MdMenuOpen } from "react-icons/md";
 
 const Navbar = () => {
   const pathname = usePathname();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const isActive = (path) => pathname === path;
 
@@ -18,7 +25,7 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <ul className="flex gap-5">
+      <ul className="lg:flex gap-5 hidden">
         <li>
           <Link
             href="/features"
@@ -59,11 +66,29 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <Link href="/login">
-        <button className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover hover:scale-105 active:scale-95 transition-all transform cursor-pointer">
-          Login
+      <div className="flex items-center gap-5">
+        <Link href="/login">
+          <button className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover hover:scale-105 active:scale-95 transition-all transform cursor-pointer">
+            Login
+          </button>
+        </Link>
+
+        <button onClick={toggleMenu} className="lg:hidden">
+          <MdMenuOpen className="w-6 h-6" />
         </button>
-      </Link>
+      </div>
+
+      <div
+        className={`lg:hidden ${
+          menuOpen ? "block translate-x-0" : "translate-x-full"
+        } fixed top-0 right-0 w-3/4 h-full bg-white z-50 transition-transform duration-500 ease-in-out`}
+      >
+        <div className="absolute top-10 right-10">
+          <button onClick={toggleMenu}>
+            <MdMenuOpen className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
     </nav>
   );
 };
