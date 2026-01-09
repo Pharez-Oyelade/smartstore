@@ -8,10 +8,12 @@ import Nav from "./components/Nav";
 import api from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useSales } from "@/context/SalesContext";
 
 const page = () => {
   const router = useRouter();
   const { fetchUser } = useAuth();
+  const { fetchSales } = useSales();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +28,7 @@ const page = () => {
     try {
       await api.post(`/auth/login`, data);
       await fetchUser();
+      fetchSales();
       router.push("/dashboard");
     } catch (error) {
       console.error(

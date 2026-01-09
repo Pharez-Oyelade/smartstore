@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import api from "@/lib/axios";
 import BtnPrimary from "@/components/ui/BtnPrimary";
 import { Search } from "lucide-react";
@@ -12,10 +12,14 @@ import { useForm } from "react-hook-form";
 import EditModal from "./components/EditModal";
 import AddModal from "./components/AddModal";
 import Title from "@/components/ui/Title";
+import { useProducts } from "@/hooks/useProducts";
 
 const Page = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const { data, isLoading, error } = useProducts();
+  const products = data;
+
+  // const [products, setProducts] = useState(data);
+  // const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [search, setSearch] = useState("");
@@ -28,13 +32,21 @@ const Page = () => {
   const [addProductModal, setAddProductModal] = useState(false);
   const [updateProductModal, setUpdateProductModal] = useState(false);
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value.trim());
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+  // const handleSearch = (e) => {
+  //   setSearch(e.target.value.trim());
+  //   const filtered = products.filter((product) =>
+  //     product.name.toLowerCase().includes(e.target.value.trim().toLowerCase())
+  //   );
+  //   setFilteredProducts(filtered);
+  // };
+
+  const filteredProducts = useMemo(() => {
+    if (!search) return products;
+
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
     );
-    setFilteredProducts(filtered);
-  };
+  }, [products, search]);
 
   const addForm = useForm({
     defaultValues: {
@@ -166,101 +178,97 @@ const Page = () => {
     }
   };
 
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get("/products/get");
-      setProducts(response.data.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchProducts = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await api.get("/products/get");
+  //     setProducts(response.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
 
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
+  // useEffect(() => {
+  //   setFilteredProducts(products);
+  // }, [products]);
 
   return (
     <div className="p-4">
-      {loading ? (
-        <InventoryLoader />
-      ) : (
-        <>
-          <Title
-            onClick={() => {
-              addForm.reset();
-              setAddProductModal(true);
-            }}
-            text="Add Product"
-            header="Products"
-            description="Manage your inventory, prices, and stock levels"
-          />
+      <>
+        <Title
+          onClick={() => {
+            addForm.reset();
+            setAddProductModal(true);
+          }}
+          text="Add Product"
+          header="Products"
+          description="Manage your inventory, prices, and stock levels"
+        />
 
-          <div className="mt-8 flex items-center gap-4">
-            <div className="relative flex items-center gap-3 border bg-surface border-border shadow-sm px-3 py-2 rounded-lg w-[40%]">
-              <Search className="w-4 h-4 text-muted" />
-              <input
-                type="text"
-                value={search}
-                onChange={handleSearch}
-                placeholder="Search products"
-                className="bg-transparent focus:outline-none w-full text-sm"
-              />
-            </div>
-
-            <div className="border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
-              <span className="text-slate-500">Stock:</span>
-              <select className="focus:outline-none bg-transparent font-medium">
-                <option>All</option>
-                <option>In Stock</option>
-                <option>Out of Stock</option>
-              </select>
-            </div>
+        <div className="mt-8 flex items-center gap-4">
+          <div className="relative flex items-center gap-3 border bg-surface border-border shadow-sm px-3 py-2 rounded-lg w-[40%]">
+            <Search className="w-4 h-4 text-muted" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search products"
+              className="bg-transparent focus:outline-none w-full text-sm"
+            />
           </div>
 
-          {/* ........ PRODUCT TABLE ............. */}
-          <ProductTable
-            products={filteredProducts}
-            getStatusStyle={getStatusStyle}
-            getStatusText={getStatusText}
-            deleteProduct={deleteProduct}
-            openEditModal={openEditModal}
-            deleteAlert={deleteAlert}
-            deletingProductId={deletingProductId}
+          <div className="border bg-white border-slate-200 shadow-sm px-3 py-2 rounded-lg flex items-center gap-2 text-sm">
+            <span className="text-slate-500">Stock:</span>
+            <select className="focus:outline-none bg-transparent font-medium">
+              <option>All</option>
+              <option>In Stock</option>
+              <option>Out of Stock</option>
+            </select>
+          </div>
+        </div>
+
+        {/* ........ PRODUCT TABLE ............. */}
+        <ProductTable
+          products={filteredProducts}
+          getStatusStyle={getStatusStyle}
+          getStatusText={getStatusText}
+          deleteProduct={deleteProduct}
+          openEditModal={openEditModal}
+          deleteAlert={deleteAlert}
+          deletingProductId={deletingProductId}
+        />
+
+        {addProductModal && (
+          <AddModal
+            onClose={() => {
+              addForm.reset();
+              setAddProductModal(false);
+            }}
+            addForm={addForm}
+            onSubmit={onSubmit}
+            addLoading={addLoading}
           />
+        )}
 
-          {addProductModal && (
-            <AddModal
-              onClose={() => {
-                addForm.reset();
-                setAddProductModal(false);
-              }}
-              addForm={addForm}
-              onSubmit={onSubmit}
-              addLoading={addLoading}
-            />
-          )}
-
-          {updateProductModal && (
-            <EditModal
-              onClose={() => {
-                updateForm.reset();
-                setUpdateProductModal(false);
-                setSelectedProduct(null);
-              }}
-              updateForm={updateForm}
-              onUpdateProduct={onUpdateProduct}
-              updateLoading={updateLoading}
-            />
-          )}
-        </>
-      )}
+        {updateProductModal && (
+          <EditModal
+            onClose={() => {
+              updateForm.reset();
+              setUpdateProductModal(false);
+              setSelectedProduct(null);
+            }}
+            updateForm={updateForm}
+            onUpdateProduct={onUpdateProduct}
+            updateLoading={updateLoading}
+          />
+        )}
+      </>
     </div>
   );
 };
