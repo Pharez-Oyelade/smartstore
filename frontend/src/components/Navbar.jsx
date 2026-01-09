@@ -10,7 +10,7 @@ const Navbar = () => {
   const isActive = (path) => pathname === path;
 
   return (
-    <nav className="flex justify-between items-center px-40 py-4 bg-surface border-b border-border shadow-xl">
+    <nav className="flex justify-between items-center lg:px-40 px-10 py-4 bg-surface border-b border-border shadow-xl">
       <Link href="/">
         <div className="flex items-center gap-2">
           <Store className="w-10 h-10 bg-accent p-2 rounded-md text-white" />
@@ -60,7 +60,7 @@ const Navbar = () => {
       </ul>
 
       <Link href="/login">
-        <button className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover transition-colors">
+        <button className="bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover hover:scale-105 active:scale-95 transition-all transform cursor-pointer">
           Login
         </button>
       </Link>
