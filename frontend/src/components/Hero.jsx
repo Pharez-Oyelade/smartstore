@@ -4,9 +4,9 @@ import Indicator from "./ui/Indicator";
 
 const Hero = () => {
   return (
-    <section className="relative w-full h-[calc(100vh-4rem)] py-16 md:py-24 px-4 md:px-10 overflow-hidden bg-background text-foreground">
-      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 my-10">
-        <div className="flex flex-col gap-6 lg:w-1/2 z-10">
+    <section className="relative w-full md:h-[calc(100vh-4rem)] py-10 md:py-24 px-4 md:px-10 overflow-hidden bg-background text-foreground">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 md:gap-12 md:my-10">
+        <div className="flex flex-col items-center lg:items-start gap-2 lg:gap-6 text-center lg:text-left lg:w-1/2 w-full z-10">
           <Indicator text="New for Nigerian Businesses" />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground">
             Track Sales and Inventory{" "}
@@ -16,7 +16,7 @@ const Hero = () => {
             Vendora helps small businesses record sales, manage stock, and
             accept payments, all from one simple dashboard.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+          <div className="flex flex-col sm:flex-row gap-2 lg:gap-3 mt-4">
             <button className="btn-primary flex items-center justify-center font-bold text-base transition-all transform hover:scale-105">
               Request a Demo
             </button>
@@ -55,7 +55,9 @@ const Hero = () => {
             <p>Trusted by 500+ local stores</p>
           </div>
         </div>
-        <div className="lg:w-1/2 w-full relative">
+
+        {/* ... Right image ... */}
+        <div className="w-full md:w-3/4 lg:w-1/2 relative">
           <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full opacity-50 z-0"></div>
           <div className="relative z-10 w-full aspect-4/3 rounded-xl overflow-hidden shadow-2xl border border-border bg-surface group">
             <div
