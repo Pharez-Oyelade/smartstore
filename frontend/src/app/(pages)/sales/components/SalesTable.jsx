@@ -16,7 +16,7 @@ const SalesTable = ({ sales, paySale }) => {
 
   return (
     <div>
-      <div className="mt-8 overflow-hidden border border-border rounded-xl bg-surface color-foreground shadow-sm">
+      <div className="overflow-hidden border border-border rounded-xl bg-surface color-foreground shadow-sm">
         <table className="w-full border-collapse">
           <thead className="bg-surface">
             <tr className="border-b border-border text-muted uppercase text-[11px] font-semibold tracking-wider">
