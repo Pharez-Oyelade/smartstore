@@ -2,46 +2,46 @@ import { prisma } from "../config/db.js";
 
 const createSale = async (req, res) => {
   try {
-    const {items, paymentMethod} = req.body;
+    const { items, paymentMethod } = req.body;
 
-    if (!items || items.length === 0 ) {
+    if (!items || items.length === 0) {
       return res.status(400).json({
-        message: "Sale items are required"
-      })
+        message: "Sale items are required",
+      });
     }
 
     if (!paymentMethod) {
       return res.status(400).json({
-        message: "Payment method is required"
-      })
+        message: "Payment method is required",
+      });
     }
 
     // fetch products
     const products = await prisma.product.findMany({
-      where:{
+      where: {
         id: {
-          in: items.map((item) => item.productId)
-        }
-      }
+          in: items.map((item) => item.productId),
+        },
+      },
     });
 
     if (products.length !== items.length) {
       return res.status(400).json({
-        message: "One or more items do not exist"
-      })
+        message: "One or more items do not exist",
+      });
     }
 
     let totalAmount = 0;
 
     const saleItemsData = items.map((item) => {
-      const product = products.find(p => p.id === item.productId)
+      const product = products.find((p) => p.id === item.productId);
 
       if (!product) {
-        throw new Error("Product missing")
+        throw new Error("Product missing");
       }
 
       if (product.stock < item.quantity) {
-        throw new Error(`${product.name} stock is insufficient`)
+        throw new Error(`${product.name} stock is insufficient`);
       }
 
       const lineTotal = product.price * item.quantity;
@@ -51,8 +51,8 @@ const createSale = async (req, res) => {
         productId: product.id,
         quantity: item.quantity,
         unitPrice: product.price,
-      }
-    })
+      };
+    });
 
     const sale = await prisma.$transaction(async (tx) => {
       const newSale = await tx.sale.create({
@@ -61,40 +61,40 @@ const createSale = async (req, res) => {
           paymentMethod,
           createdBy: req.user.id,
           items: {
-            create: saleItemsData
+            create: saleItemsData,
           },
         },
         include: {
-          items: true
-        }
+          items: true,
+        },
       });
 
       // Deduct stock
       for (const item of saleItemsData) {
         await tx.product.update({
-          where: {id: item.productId},
+          where: { id: item.productId },
           data: {
             stock: {
-              decrement: item.quantity
-            }
-          }
-        })
+              decrement: item.quantity,
+            },
+          },
+        });
       }
 
-      return newSale
+      return newSale;
     });
 
     return res.status(201).json({
       message: "Sale created successfully",
-      sale
-    })
+      sale,
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return res.status(500).json({
-      message: "Failed to create sale"
-    })
+      message: "Failed to create sale",
+    });
   }
-}
+};
 
 // const getSales = async (req, res) => {
 //   try {
@@ -119,7 +119,6 @@ const createSale = async (req, res) => {
 //   }
 // }
 
-
 const getSales = async (req, res) => {
   try {
     const sales = await prisma.sale.findMany({
@@ -130,7 +129,17 @@ const getSales = async (req, res) => {
         createdAt: "desc",
       },
       include: {
-        items: true,
+        items: {
+          include: {
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+              },
+            },
+          },
+        },
         payment: true,
       },
     });
@@ -144,7 +153,13 @@ const getSales = async (req, res) => {
         totalAmount: sale.totalAmount,
 
         itemsCount: sale.items.length,
-        items: sale.items,
+        items: sale.items.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          productId: item.productId,
+          productName: item.product.name,
+        })),
 
         payment: sale.payment,
         paymentStatus,
@@ -165,6 +180,5 @@ const getSales = async (req, res) => {
     });
   }
 };
-
 
 export { createSale, getSales };
