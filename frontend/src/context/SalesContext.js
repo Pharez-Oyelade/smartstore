@@ -55,15 +55,39 @@ export const SalesProvider = ({ children }) => {
     fetchSales();
   }, []);
 
+  const startOfWeek = new Date();
+  const day = startOfWeek.getDay();
+  const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+
+  startOfWeek.setDate(diff);
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+  const weeklyRevenue = weekDays.map((day, index) => ({
+    day,
+    revenue: 0,
+  }));
+
+  sales.forEach((sale) => {
+    const saleDate = new Date(sale.createdAt);
+
+    if (saleDate >= startOfWeek) {
+      const dayIndex = (saleDate.getDay() + 6) % 7;
+      weeklyRevenue[dayIndex].revenue += sale.totalAmount;
+    }
+  });
+
   const value = useMemo(
     () => ({
       sales,
       totalRevenue,
       getDailyRevenue,
       monthlyRevenue,
+      weeklyRevenue,
       fetchSales,
     }),
-    [sales, totalRevenue, getDailyRevenue, monthlyRevenue]
+    [sales, totalRevenue, getDailyRevenue, monthlyRevenue, weeklyRevenue]
   );
 
   return (
