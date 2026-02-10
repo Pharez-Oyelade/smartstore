@@ -57,7 +57,7 @@ export const SalesProvider = ({ children }) => {
 
   const startOfWeek = new Date();
   const day = startOfWeek.getDay();
-  const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+  const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1);
 
   startOfWeek.setDate(diff);
   startOfWeek.setHours(0, 0, 0, 0);
@@ -78,6 +78,12 @@ export const SalesProvider = ({ children }) => {
     }
   });
 
+  // calculate total weekly revenue
+  const totalWeeklyRevenue = weeklyRevenue.reduce(
+    (sum, sale) => sum + sale.revenue,
+    0
+  );
+
   const value = useMemo(
     () => ({
       sales,
@@ -85,9 +91,18 @@ export const SalesProvider = ({ children }) => {
       getDailyRevenue,
       monthlyRevenue,
       weeklyRevenue,
+      totalWeeklyRevenue,
+      setSales,
       fetchSales,
     }),
-    [sales, totalRevenue, getDailyRevenue, monthlyRevenue, weeklyRevenue]
+    [
+      sales,
+      totalRevenue,
+      getDailyRevenue,
+      monthlyRevenue,
+      weeklyRevenue,
+      totalWeeklyRevenue,
+    ]
   );
 
   return (

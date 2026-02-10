@@ -33,6 +33,7 @@ const page = () => {
     getDailyRevenue,
     monthlyRevenue,
     weeklyRevenue,
+    totalWeeklyRevenue,
   } = useSales();
   const router = useRouter();
 
@@ -113,7 +114,6 @@ const page = () => {
   //   .slice(0, 5);
 
   const salesProduct = [...sales]
-    .reverse()
     .flatMap((sale) =>
       sale.items.map((item) => ({
         id: item.productId,
@@ -153,13 +153,20 @@ const page = () => {
 
       <div className="flex justify-between gap-10">
         <div className="mt-10 bg-white rounded-2xl w-[70%]">
-          <div>
+          <div className="p-4 flex justify-between w-full">
             <div>
-              <h3>Weekly Sales Overview</h3>
-              <span>Performance over the last 7 days</span>
+              <h3 className="text-lg font-semibold">Weekly Sales Overview</h3>
+              <span className="text-xs text-slate-500">
+                Performance over the last 7 days
+              </span>
+            </div>
+
+            <div className="text-2xl font-semibold">
+              ₦ {totalWeeklyRevenue.toLocaleString()}
             </div>
           </div>
-          <div className="mx-30">
+
+          <div className="mx-30 w-full">
             <ComposedChart
               style={{ width: "100%", aspectRatio: 1.618, maxWidth: 600 }}
               responsive

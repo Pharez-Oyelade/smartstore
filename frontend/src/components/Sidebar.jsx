@@ -15,11 +15,14 @@ import {
   X,
   Menu,
 } from "lucide-react";
+import { useSales } from "@/context/SalesContext";
 
 const Sidebar = () => {
   const { user, setUser } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const { setSales } = useSales();
 
   const [open, setOpen] = useState(true);
 
@@ -43,6 +46,7 @@ const Sidebar = () => {
     try {
       await api.get("/auth/logout");
       setUser(null);
+      setSales([]);
       router.push("/login");
     } catch (err) {
       console.error(err);
