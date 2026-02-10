@@ -5,7 +5,51 @@ import FeatureTools from "../components/FeatureTools";
 import WhySection from "../components/WhySection";
 import Cta from "../components/Cta";
 
+import {
+  ShoppingCart,
+  Archive,
+  Banknote,
+  ClipboardPlus,
+  Users,
+} from "lucide-react";
+
 const page = () => {
+  const tools = [
+    {
+      title: "Fast Sales & Checkout",
+      description:
+        "Create orders instantly with a simple cart system designed to get customers moving.",
+      icon: <ShoppingCart />,
+    },
+    {
+      title: "Inventory Management",
+      description:
+        "Track stock levels in real-time and get automated alerts before you run out of best-sellers.",
+      icon: <Archive />,
+    },
+    {
+      title: "Sales History & Reporting",
+      description:
+        "View daily earnings at a glance and track pending payments easily from your dashboard.",
+      icon: <ClipboardPlus />,
+    },
+    {
+      title: "Flexible Payments",
+      description:
+        "Accept cash now, record bank transfers, or track partial payments to collect later.",
+      icon: <Banknote />,
+    },
+    {
+      title: "Customer Records",
+      description:
+        "Keep track of your regulars, their purchase history, and their preferences to build loyalty.",
+      icon: <Users />,
+    },
+  ];
+
+  const toolStyles =
+    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20";
+
   return (
     <div>
       <main className="relative w-full h-[calc(100vh-4rem)] py-16 md:py-24 px-4 md:px-10 overflow-hidden bg-background text-foreground">
@@ -82,7 +126,7 @@ const page = () => {
       </main>
 
       {/* other sections */}
-      <FeatureTools />
+      <FeatureTools tools={tools} toolStyles={toolStyles} />
       <WhySection />
       <Cta
         title="Ready to organize your shop?"

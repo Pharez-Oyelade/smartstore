@@ -1,46 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import {
-  ShoppingCart,
-  Archive,
-  Banknote,
-  ClipboardPlus,
-  Users,
-} from "lucide-react";
 
-const FeatureTools = () => {
-  const tools = [
-    {
-      title: "Fast Sales & Checkout",
-      description:
-        "Create orders instantly with a simple cart system designed to get customers moving.",
-      icon: <ShoppingCart />,
-    },
-    {
-      title: "Inventory Management",
-      description:
-        "Track stock levels in real-time and get automated alerts before you run out of best-sellers.",
-      icon: <Archive />,
-    },
-    {
-      title: "Sales History & Reporting",
-      description:
-        "View daily earnings at a glance and track pending payments easily from your dashboard.",
-      icon: <ClipboardPlus />,
-    },
-    {
-      title: "Flexible Payments",
-      description:
-        "Accept cash now, record bank transfers, or track partial payments to collect later.",
-      icon: <Banknote />,
-    },
-    {
-      title: "Customer Records",
-      description:
-        "Keep track of your regulars, their purchase history, and their preferences to build loyalty.",
-      icon: <Users />,
-    },
-  ];
+const FeatureTools = ({ tools, toolStyles }) => {
   return (
     <section className="bg-white px-40 py-20">
       <div className="flex flex-col gap-2 justify-center items-center">
@@ -54,7 +15,7 @@ const FeatureTools = () => {
       </div>
 
       {/* Tools grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
+      <div className={toolStyles}>
         {tools.map((tool, index) => (
           <div
             key={index}
