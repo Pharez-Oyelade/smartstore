@@ -58,8 +58,10 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            href="#"
-            className="px-3 py-2 rounded-md transition-colors hover:text-accent"
+            href="/contact"
+            className={`px-3 py-2 rounded-md transition-colors hover:text-accent ${
+              isActive("/contact") ? "active" : ""
+            }`}
           >
             Contact
           </Link>
